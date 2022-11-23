@@ -10,7 +10,7 @@ const defaultTheme = {
       input: '#EDEDED',
       card: '#F3F2F2',
       background: '#EDEDED',
-      lightColor: '#FFF',
+      white: '#FFF',
     },
 
     yellow: {
