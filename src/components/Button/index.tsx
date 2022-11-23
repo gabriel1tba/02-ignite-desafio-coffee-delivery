@@ -5,11 +5,12 @@ import * as S from './styles';
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children?: string;
-  fontWeight?: 'regular' | 'bold';
   icon?: Icon;
   color?: 'yellow' | 'purple';
   variant?: 'solid' | 'common';
   size?: 'small' | 'normal';
+  fontSize?: 'small' | 'normal';
+  fontWeight?: 'regular' | 'bold';
 }
 
 const Button = ({
@@ -17,6 +18,8 @@ const Button = ({
   icon: Icon,
   color = 'yellow',
   variant = 'solid',
+  size = 'normal',
+  fontSize = 'normal',
   fontWeight = 'regular',
   ...props
 }: ButtonProps) => {
@@ -24,6 +27,8 @@ const Button = ({
     <S.Container
       color={color}
       variant={variant}
+      size={size}
+      fontSize={fontSize}
       fontWeigth={fontWeight}
       {...props}
     >
