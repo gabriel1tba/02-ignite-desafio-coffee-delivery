@@ -9,13 +9,10 @@ import QuantitySelector from './components/QuantitySelector';
 const App = () => {
   const [count, setCount] = useState(0);
 
-  const decrement = () =>
-    setCount((prev) => {
-      if (prev > 0) return prev - 1;
-      return prev;
-    });
+  const handleDecrement = (value: number) =>
+    setCount((prev) => (prev > 0 ? value : prev));
 
-  const increment = () => setCount(count + 1);
+  const handleIncrement = (value: number) => setCount(value);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -24,8 +21,8 @@ const App = () => {
 
       <QuantitySelector
         quantity={count}
-        onDecrement={decrement}
-        onIncrement={increment}
+        onDecrement={(value) => handleDecrement(value)}
+        onIncrement={(value) => handleIncrement(value)}
       />
       <GlobalStyle />
     </ThemeProvider>
