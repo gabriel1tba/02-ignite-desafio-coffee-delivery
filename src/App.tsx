@@ -1,36 +1,32 @@
 import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { ShoppingCartSimple, Trash } from 'phosphor-react';
 
 import GlobalStyle from './styles/global';
 import defaultTheme from './styles/themes/default';
 
-import CartButton from './components/CartButton';
+import QuantitySelector from './components/QuantitySelector';
 
 const App = () => {
   const [count, setCount] = useState(0);
+
+  const decrement = () =>
+    setCount((prev) => {
+      if (prev > 0) return prev - 1;
+      return prev;
+    });
+
   const increment = () => setCount(count + 1);
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <h1>Coffee Delivery</h1>
       <p>Count: {count}</p>
-      <CartButton
-        icon={ShoppingCartSimple}
-        color='purple'
-        onClick={increment}
-        quantity={count}
-        style={{ marginTop: 20, marginLeft: 20 }}
-      />
 
-      <CartButton
-        icon={ShoppingCartSimple}
-        onClick={increment}
-        variant='common'
+      <QuantitySelector
         quantity={count}
-        style={{ marginTop: 20, marginLeft: 20 }}
+        onDecrement={decrement}
+        onIncrement={increment}
       />
-
       <GlobalStyle />
     </ThemeProvider>
   );
