@@ -19,6 +19,7 @@ const App = () => {
         icon={ShoppingCartSimple}
         color='purple'
         onClick={increment}
+        quantity={count}
         style={{ marginTop: 20, marginLeft: 20 }}
       />
 
@@ -26,6 +27,7 @@ const App = () => {
         icon={ShoppingCartSimple}
         onClick={increment}
         variant='common'
+        quantity={count}
         style={{ marginTop: 20, marginLeft: 20 }}
       />
 

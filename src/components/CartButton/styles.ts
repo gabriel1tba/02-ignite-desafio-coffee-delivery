@@ -5,6 +5,7 @@ type Variant = 'solid' | 'common';
 interface WrapperProps {
   variant: Variant;
   color: 'yellow' | 'purple';
+  quantity: number;
 }
 
 const wrapperVariant = {
@@ -12,6 +13,12 @@ const wrapperVariant = {
     background-color: ${variant === 'solid'
       ? theme.colors.yellow.dark
       : theme.colors.yellow.light};
+
+    &::after {
+      background-color: ${variant === 'solid'
+        ? theme.colors.yellow.medium
+        : theme.colors.yellow.dark};
+    }
 
     svg {
       color: ${variant === 'solid'
@@ -36,6 +43,12 @@ const wrapperVariant = {
       ? theme.colors.purple.dark
       : theme.colors.purple.light};
 
+    &::after {
+      background-color: ${variant === 'solid'
+        ? theme.colors.purple.medium
+        : theme.colors.purple.dark};
+    }
+
     svg {
       color: ${variant === 'solid'
         ? theme.colors.bases.white
@@ -57,7 +70,7 @@ const wrapperVariant = {
 };
 
 export const Wrapper = styled.button<WrapperProps>`
-  ${({ theme, color, variant }) => css`
+  ${({ theme, color, variant, quantity }) => css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,6 +85,27 @@ export const Wrapper = styled.button<WrapperProps>`
     border: none;
 
     transition: background-color 0.5s;
+
+    ${quantity > 0 &&
+    css`
+      position: relative;
+
+      &::after {
+        content: '${quantity}';
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+        color: ${theme.colors.bases.white};
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 1rem;
+        font-size: 0.7rem;
+      }
+    `}
 
     svg {
       font-size: 1.375rem;

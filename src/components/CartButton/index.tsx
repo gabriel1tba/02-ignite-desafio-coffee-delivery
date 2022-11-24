@@ -7,16 +7,17 @@ export interface CartButtonProps extends ComponentPropsWithoutRef<'button'> {
   icon?: Icon;
   color?: 'yellow' | 'purple';
   variant?: 'solid' | 'common';
+  quantity?: number;
 }
 
 const CartButton = ({
   icon: Icon,
   color = 'yellow',
   variant = 'solid',
-
+  quantity = 0,
   ...props
 }: CartButtonProps) => (
-  <S.Wrapper color={color} variant={variant} {...props}>
+  <S.Wrapper color={color} variant={variant} quantity={quantity} {...props}>
     {Icon && <Icon />}
   </S.Wrapper>
 );
