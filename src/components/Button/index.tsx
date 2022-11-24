@@ -22,20 +22,18 @@ const Button = ({
   fontSize = 'normal',
   fontWeight = 'regular',
   ...props
-}: ButtonProps) => {
-  return (
-    <S.Container
-      color={color}
-      variant={variant}
-      size={size}
-      fontSize={fontSize}
-      fontWeigth={fontWeight}
-      {...props}
-    >
-      {Icon && <Icon />}
-      {children && <span>{children}</span>}
-    </S.Container>
-  );
-};
+}: ButtonProps) => (
+  <S.Wrapper
+    color={color}
+    variant={variant}
+    size={size}
+    fontSize={fontSize}
+    fontWeigth={fontWeight}
+    {...props}
+  >
+    {Icon && <Icon />}
+    {children && <span>{children}</span>}
+  </S.Wrapper>
+);
 
 export default Button;

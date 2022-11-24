@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Trash } from 'phosphor-react';
+import { ShoppingCartSimple, Trash } from 'phosphor-react';
 
 import GlobalStyle from './styles/global';
 import defaultTheme from './styles/themes/default';
 
-import Button from './components/Button';
+import CartButton from './components/CartButton';
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -15,21 +15,19 @@ const App = () => {
     <ThemeProvider theme={defaultTheme}>
       <h1>Coffee Delivery</h1>
       <p>Count: {count}</p>
-      <Button icon={Trash} color='purple' onClick={increment}>
-        LABEL
-      </Button>
-
-      <Button
-        style={{ marginTop: 20 }}
-        icon={Trash}
-        variant='common'
+      <CartButton
+        icon={ShoppingCartSimple}
         color='purple'
-        size='small'
-        fontSize='small'
         onClick={increment}
-      >
-        Increment
-      </Button>
+        style={{ marginTop: 20, marginLeft: 20 }}
+      />
+
+      <CartButton
+        icon={ShoppingCartSimple}
+        onClick={increment}
+        variant='common'
+        style={{ marginTop: 20, marginLeft: 20 }}
+      />
 
       <GlobalStyle />
     </ThemeProvider>
