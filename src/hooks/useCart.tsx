@@ -2,14 +2,13 @@ import {
   createContext,
   useContext,
   ReactNode,
-  useState,
   useMemo,
   useCallback,
 } from 'react';
 
-import productsMocked from '../mocks/products';
+import useLocalStorage from './useLocalStorage';
 
-interface Product {
+export type Product = {
   id: number;
   image: string;
   label: string[];
@@ -17,11 +16,10 @@ interface Product {
   description: string;
   price: number;
   amount: number;
-}
+};
 
 interface CartContextProps {
   products: Product[];
-  productsAddedToCart: Product[];
   totalPrice: number;
   addToCart: (product: Product) => void;
   removeFromCart: (id: number) => void;
@@ -36,23 +34,29 @@ interface CartProviderProps {
 }
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [products, setProducts] = useState<Product[]>(productsMocked);
+  const [products, setProducts] = useLocalStorage<Product[]>(
+    '@RocketShoes:products',
+    []
+  );
 
   const addToCart = useCallback(
     (product: Product) => {
       const productExists = products.find((p) => p.id === product.id);
 
       if (productExists) {
-        setProducts(
-          products.map((p) =>
+        setProducts((prevState) =>
+          prevState.map((p) =>
             p.id === product.id ? { ...product, amount: p.amount + 1 } : p
           )
         );
       } else {
-        setProducts([...products, { ...product, amount: 1 }]);
+        setProducts(
+          (prevState) => [...prevState, { ...product, amount: 1 }] as Product[]
+        );
       }
     },
-    [products]
+
+    [products, setProducts]
   );
 
   const removeFromCart = useCallback(
@@ -61,7 +65,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
 
       setProducts(remainingProducts);
     },
-    [products]
+    [products, setProducts]
   );
 
   const increment = useCallback(
@@ -72,7 +76,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
 
       setProducts(updatedProducts);
     },
-    [products]
+    [products, setProducts]
   );
 
   const decrement = useCallback(
@@ -83,7 +87,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
 
       setProducts(updatedProducts);
     },
-    [products]
+    [products, setProducts]
   );
 
   const totalPrice = useMemo(() => {
@@ -96,17 +100,10 @@ const CartProvider = ({ children }: CartProviderProps) => {
     return total;
   }, [products]);
 
-  const productsAddedToCart = useMemo(() => {
-    const total = products.filter((product) => product.amount > 0);
-
-    return total;
-  }, [products]);
-
   return (
     <CartContext.Provider
       value={{
         products,
-        productsAddedToCart,
         totalPrice,
         addToCart,
         removeFromCart,

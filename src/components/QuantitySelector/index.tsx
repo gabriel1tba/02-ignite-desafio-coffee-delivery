@@ -4,8 +4,8 @@ import * as S from './styles';
 
 interface QuantitySelectorProps {
   quantity: number;
-  onDecrement: (value: number) => void;
-  onIncrement: (value: number) => void;
+  onDecrement: () => void;
+  onIncrement: () => void;
 }
 
 const QuantitySelector = ({
@@ -14,9 +14,9 @@ const QuantitySelector = ({
   onIncrement,
 }: QuantitySelectorProps) => (
   <S.Wrapper>
-    <Minus onClick={() => onDecrement(quantity > 0 ? quantity - 1 : 0)} />
+    <Minus onClick={onDecrement} />
     <span>{quantity}</span>
-    <Plus onClick={() => onIncrement(quantity + 1)} />
+    <Plus onClick={onIncrement} />
   </S.Wrapper>
 );
 
