@@ -91,7 +91,7 @@ export const Wrapper = styled.button<WrapperProps>`
     gap: 0.25rem;
     padding: 0.75rem 0.5rem;
     height: ${size === 'normal' ? '2.875rem' : '2rem'};
-    width: 8.25rem;
+    width: fit-content;
     border-radius: 6px;
     font-weight: ${fontWeigth === 'regular' ? 400 : 700};
     font-size: ${fontSize === 'normal' ? '0.875rem' : '0.75rem'};

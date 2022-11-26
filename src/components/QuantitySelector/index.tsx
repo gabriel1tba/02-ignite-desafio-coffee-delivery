@@ -14,7 +14,7 @@ const QuantitySelector = ({
   onIncrement,
 }: QuantitySelectorProps) => (
   <S.Wrapper>
-    <Minus onClick={() => onDecrement(quantity - 1)} />
+    <Minus onClick={() => onDecrement(quantity > 0 ? quantity - 1 : 0)} />
     <span>{quantity}</span>
     <Plus onClick={() => onIncrement(quantity + 1)} />
   </S.Wrapper>
