@@ -7,6 +7,8 @@ import {
   useCallback,
 } from 'react';
 
+import productsMocked from '../mocks/products';
+
 interface Product {
   id: number;
   image: string;
@@ -34,15 +36,7 @@ interface CartProviderProps {
 }
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [products, setProducts] = useState<Product[]>(() => {
-    const storagedProducts = localStorage.getItem('@Coffee-Delivery:products');
-
-    if (storagedProducts) {
-      return JSON.parse(storagedProducts);
-    }
-
-    return [];
-  });
+  const [products, setProducts] = useState<Product[]>(productsMocked);
 
   const addToCart = useCallback(
     (product: Product) => {
