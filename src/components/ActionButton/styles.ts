@@ -5,6 +5,7 @@ type Variant = 'solid' | 'common';
 interface WrapperProps {
   variant: Variant;
   color: 'yellow' | 'purple';
+  borderRadius: 'rounded' | 'common';
   quantity: number;
 }
 
@@ -70,7 +71,7 @@ const wrapperVariant = {
 };
 
 export const Wrapper = styled.button<WrapperProps>`
-  ${({ theme, color, variant, quantity }) => css`
+  ${({ theme, color, variant, borderRadius, quantity }) => css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,7 +79,7 @@ export const Wrapper = styled.button<WrapperProps>`
     padding: 0.75rem 0.5rem;
     height: 2.375rem;
     width: 2.375rem;
-    border-radius: 6px;
+    border-radius: ${borderRadius === 'rounded' ? '50%' : '6px'};
     line-height: 1.375rem;
 
     text-transform: uppercase;

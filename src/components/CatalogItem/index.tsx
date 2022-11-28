@@ -1,11 +1,12 @@
 import { MdShoppingCart, MdRemoveShoppingCart } from 'react-icons/md';
 
-import { Product, useCartContext } from '../../hooks/useCart';
 import formatCurrency from '../../utils/formatCurrency';
 
-import CartButton from '../CartButton';
+import { Product, useCartContext } from '../../hooks/useCart';
 
+import ActionButton from '../ActionButton';
 import QuantitySelector from '../QuantitySelector';
+
 import * as S from './styles';
 
 interface CatalogItemProps {
@@ -17,7 +18,7 @@ const CatalogItem = ({ product }: CatalogItemProps) => {
 
   return (
     <S.Wrapper>
-      <img src={product.image} alt="" />
+      <img src={product.image} />
       <S.WrapperLabel>
         {product.label.map((label) => (
           <span key={label}>{label}</span>
@@ -31,19 +32,19 @@ const CatalogItem = ({ product }: CatalogItemProps) => {
         <p>{formatCurrency(product.price)}</p>
 
         <QuantitySelector
-          quantity={0}
-          onDecrement={() => decrement(1)}
-          onIncrement={() => increment(1)}
+          quantity={product.amount}
+          onDecrement={() => decrement(product.id)}
+          onIncrement={() => increment(product.id)}
         />
 
         {product.addedToCart ? (
-          <CartButton
+          <ActionButton
             onClick={() => removeFromCart(product.id)}
             color="purple"
             icon={MdRemoveShoppingCart}
           />
         ) : (
-          <CartButton
+          <ActionButton
             onClick={() => addToCart(product.id)}
             color="purple"
             icon={MdShoppingCart}

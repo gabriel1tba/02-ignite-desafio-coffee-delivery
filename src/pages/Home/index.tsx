@@ -1,12 +1,16 @@
 import CatalogItem from '../../components/CatalogItem';
-import productsMocked from '../../mocks/products';
+import CartItem from '../../components/CartItem';
+import { useCartContext } from '../../hooks/useCart';
 
 import * as S from './styles';
 
 const Home = () => {
+  const { products } = useCartContext();
+
   return (
     <S.Wrapper>
-      <CatalogItem key={productsMocked[0].id} product={productsMocked[0]} />
+      <CartItem product={products[0]} />
+      <CatalogItem product={products[0]} />
     </S.Wrapper>
   );
 };
