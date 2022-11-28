@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
-    height: 2rem;
+    height: 2.375rem;
     width: 4.5rem;
     border-radius: 6px;
     background: ${theme.colors.bases.button};

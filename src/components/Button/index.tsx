@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Icon } from 'phosphor-react';
+import { IconType } from 'react-icons/lib';
 
 import * as S from './styles';
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children?: string;
-  icon?: Icon;
+  icon?: IconType;
   color?: 'yellow' | 'purple';
   variant?: 'solid' | 'common';
   size?: 'small' | 'normal';

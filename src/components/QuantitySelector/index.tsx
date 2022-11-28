@@ -1,4 +1,4 @@
-import { Plus, Minus } from 'phosphor-react';
+import { HiOutlineMinus, HiOutlinePlus } from 'react-icons/hi';
 
 import * as S from './styles';
 
@@ -14,9 +14,9 @@ const QuantitySelector = ({
   onIncrement,
 }: QuantitySelectorProps) => (
   <S.Wrapper>
-    <Minus onClick={onDecrement} />
+    <HiOutlineMinus onClick={onDecrement} />
     <span>{quantity}</span>
-    <Plus onClick={onIncrement} />
+    <HiOutlinePlus onClick={onIncrement} />
   </S.Wrapper>
 );
 

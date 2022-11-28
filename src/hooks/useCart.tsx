@@ -38,7 +38,7 @@ interface CartProviderProps {
 
 const CartProvider = ({ children }: CartProviderProps) => {
   const [products, setProducts] = useLocalStorage<Product[]>(
-    '@RocketShoes:products',
+    '@CoffeeDelivery:products',
     productsMocked
   );
 
@@ -94,11 +94,13 @@ const CartProvider = ({ children }: CartProviderProps) => {
   );
 
   const totalPrice = useMemo(() => {
-    const total = products.reduce((sumTotal, product) => {
-      const productSubtotal = product.price * product.amount;
+    const total = products
+      .filter((product) => product.addedToCart)
+      .reduce((sumTotal, product) => {
+        const productSubtotal = product.price * product.amount;
 
-      return sumTotal + productSubtotal;
-    }, 0);
+        return sumTotal + productSubtotal;
+      }, 0);
 
     return total;
   }, [products]);

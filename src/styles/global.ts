@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     height: 100vh;
     font-size: 1rem;
-    background-color: ${({ theme }) => theme.colors.bases.background}
+    background-color: #FAFAFA;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: ${({ theme }) => theme.fonts.family.secondary};

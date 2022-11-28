@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef } from 'react';
-import { Icon } from 'phosphor-react';
+import { IconType } from 'react-icons/lib';
 
 import * as S from './styles';
 
 export interface CartButtonProps extends ComponentPropsWithoutRef<'button'> {
-  icon?: Icon;
+  icon: IconType;
   color?: 'yellow' | 'purple';
   variant?: 'solid' | 'common';
   quantity?: number;
@@ -18,7 +18,7 @@ const CartButton = ({
   ...props
 }: CartButtonProps) => (
   <S.Wrapper color={color} variant={variant} quantity={quantity} {...props}>
-    {Icon && <Icon />}
+    <Icon />
   </S.Wrapper>
 );
 
