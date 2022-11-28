@@ -1,19 +1,38 @@
+import { Product, useCartContext } from '../../hooks/useCart';
+
+import productsMocked from '../../mocks/products';
+
+import QuantitySelector from '../QuantitySelector';
 import * as S from './styles';
 
 interface CatalogItemProps {
-  id: number;
-  image: string;
-  label: string[];
-  title: string;
-  description: string;
-  price: number;
-  amount: number;
+  product: Product;
 }
 
 const CatalogItem = () => {
+  const { addToCart, increment, decrement } = useCartContext();
+
   return (
     <S.Wrapper>
-      <h1>CatalogItem</h1>
+      <img src={productsMocked[13].image} alt="" />
+      <S.WrapperLabel>
+        {productsMocked[13].label.map((label) => (
+          <span key={label}>{label}</span>
+        ))}
+      </S.WrapperLabel>
+
+      <p>{productsMocked[13].title}</p>
+      <p>{productsMocked[13].description}</p>
+
+      <S.Footer>
+        <p>{productsMocked[13].price}</p>
+
+        <QuantitySelector
+          quantity={0}
+          onDecrement={() => decrement(1)}
+          onIncrement={() => increment(1)}
+        />
+      </S.Footer>
     </S.Wrapper>
   );
 };

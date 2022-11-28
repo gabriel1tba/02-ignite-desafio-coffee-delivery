@@ -8,6 +8,8 @@ import {
 
 import useLocalStorage from './useLocalStorage';
 
+import productsMocked from '../mocks/products';
+
 export type Product = {
   id: number;
   image: string;
@@ -16,12 +18,13 @@ export type Product = {
   description: string;
   price: number;
   amount: number;
+  addedToCart: boolean;
 };
 
 interface CartContextProps {
   products: Product[];
   totalPrice: number;
-  addToCart: (product: Product) => void;
+  addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
   increment: (id: number) => void;
   decrement: (id: number) => void;
@@ -36,24 +39,18 @@ interface CartProviderProps {
 const CartProvider = ({ children }: CartProviderProps) => {
   const [products, setProducts] = useLocalStorage<Product[]>(
     '@RocketShoes:products',
-    []
+    productsMocked
   );
 
   const addToCart = useCallback(
-    (product: Product) => {
-      const productExists = products.find((p) => p.id === product.id);
+    (id: number) => {
+      const updatedProducts = products.map((product) =>
+        product.id === id
+          ? { ...product, amount: product.amount + 1, addedToCart: true }
+          : product
+      );
 
-      if (productExists) {
-        setProducts((prevState) =>
-          prevState.map((p) =>
-            p.id === product.id ? { ...product, amount: p.amount + 1 } : p
-          )
-        );
-      } else {
-        setProducts(
-          (prevState) => [...prevState, { ...product, amount: 1 }] as Product[]
-        );
-      }
+      setProducts(updatedProducts);
     },
 
     [products, setProducts]
@@ -61,9 +58,13 @@ const CartProvider = ({ children }: CartProviderProps) => {
 
   const removeFromCart = useCallback(
     (id: number) => {
-      const remainingProducts = products.filter((product) => product.id !== id);
+      const updatedProducts = products.map((product) =>
+        product.id === id
+          ? { ...product, amount: 0, addedToCart: false }
+          : product
+      );
 
-      setProducts(remainingProducts);
+      setProducts(updatedProducts);
     },
     [products, setProducts]
   );
@@ -82,7 +83,9 @@ const CartProvider = ({ children }: CartProviderProps) => {
   const decrement = useCallback(
     (id: number) => {
       const updatedProducts = products.map((product) =>
-        product.id === id ? { ...product, amount: product.amount - 1 } : product
+        product.id === id
+          ? { ...product, amount: product.amount > 0 ? product.amount - 1 : 0 }
+          : product
       );
 
       setProducts(updatedProducts);
