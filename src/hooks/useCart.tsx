@@ -6,9 +6,7 @@ import {
   useCallback,
 } from 'react';
 
-import useLocalStorage from './useLocalStorage';
-
-import productsMocked from '../mocks/products';
+import useCartLocalStorage from './useCartLocalStorage';
 
 export type Product = {
   id: number;
@@ -38,10 +36,7 @@ interface CartProviderProps {
 }
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [products, setProducts] = useLocalStorage<Product[]>(
-    '@CoffeeDelivery:products',
-    productsMocked
-  );
+  const [products, setProducts] = useCartLocalStorage();
 
   const addToCart = useCallback(
     (id: number) => {
