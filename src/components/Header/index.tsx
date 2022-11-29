@@ -20,17 +20,11 @@ const Header = () => {
       </Link>
 
       <div>
-        <Button
-          variant="common"
-          color="purple"
-          size="small"
-          icon={MdLocationOn}
-        >
+        <Button variant="common" color="purple" icon={MdLocationOn}>
           Itabuna, BA
         </Button>
 
         <ActionButton
-          size="small"
           variant="common"
           icon={MdShoppingCart}
           pinContent={totalProductsInCart}

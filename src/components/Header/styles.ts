@@ -4,7 +4,8 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 6.5rem;
+  height: 5.5rem;
+  margin-bottom: 5.75rem;
 
   > div {
     display: flex;
