@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <S.Wrapper>
-      <CartItem product={products[0]} />
+      <CartItem product={products[5]} />
       <CatalogItem product={products[0]} />
     </S.Wrapper>
   );

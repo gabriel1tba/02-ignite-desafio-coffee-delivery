@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { Wrapper as ActionButtonWrapper } from '../ActionButton/styles';
+
 export const Wrapper = styled.div`
   ${({ theme }) => css`
     display: flex;
@@ -68,7 +70,9 @@ export const Footer = styled.div`
     margin-right: 1.375rem;
   }
 
-  > button {
+  ${ActionButtonWrapper} {
     margin-left: 0.5rem;
+    height: 2.375rem;
+    width: 2.375rem;
   }
 `;

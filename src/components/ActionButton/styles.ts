@@ -6,7 +6,8 @@ interface WrapperProps {
   variant: Variant;
   color: 'yellow' | 'purple';
   borderRadius: 'rounded' | 'common';
-  quantity: number;
+  size: 'small' | 'normal';
+  pinContent: number;
 }
 
 const wrapperVariant = {
@@ -71,14 +72,14 @@ const wrapperVariant = {
 };
 
 export const Wrapper = styled.button<WrapperProps>`
-  ${({ theme, color, variant, borderRadius, quantity }) => css`
+  ${({ theme, color, variant, borderRadius, size, pinContent }) => css`
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.25rem;
     padding: 0.75rem 0.5rem;
-    height: 2.375rem;
-    width: 2.375rem;
+    height: ${size === 'normal' ? '2.875rem' : '2rem'};
+    width: ${size === 'normal' ? '2.875rem' : '2rem'};
     border-radius: ${borderRadius === 'rounded' ? '50%' : '6px'};
     line-height: 1.375rem;
 
@@ -87,24 +88,24 @@ export const Wrapper = styled.button<WrapperProps>`
 
     transition: background-color 0.5s;
 
-    ${quantity > 0 &&
+    ${pinContent > 0 &&
     css`
       position: relative;
 
       &::after {
-        content: '${quantity}';
+        content: '${pinContent}';
         position: absolute;
-        top: -0.5rem;
-        right: -0.5rem;
-        width: 1.25rem;
-        height: 1.25rem;
+        top: ${size === 'normal' ? '-0.5rem' : '-0.3rem'};
+        right: ${size === 'normal' ? '-0.5rem' : '-0.3rem'};
+        height: ${size === 'normal' ? '1.25rem' : '0.9rem'};
+        width: ${size === 'normal' ? '1.25rem' : '0.9rem'};
         border-radius: 50%;
         color: ${theme.colors.bases.white};
         display: flex;
         justify-content: center;
         align-items: center;
         font-weight: 1rem;
-        font-size: 0.7rem;
+        font-size: ${size === 'normal' ? '0.75rem' : '0.5rem'};
       }
     `}
 

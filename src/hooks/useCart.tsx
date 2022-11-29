@@ -23,6 +23,7 @@ export type Product = {
 
 interface CartContextProps {
   products: Product[];
+  totalProductsInCart: number;
   totalPrice: number;
   addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
@@ -93,6 +94,10 @@ const CartProvider = ({ children }: CartProviderProps) => {
     [products, setProducts]
   );
 
+  const totalProductsInCart = useMemo(() => {
+    return products.filter((product) => product.addedToCart).length;
+  }, [products]);
+
   const totalPrice = useMemo(() => {
     const total = products
       .filter((product) => product.addedToCart)
@@ -110,6 +115,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
       value={{
         products,
         totalPrice,
+        totalProductsInCart,
         addToCart,
         removeFromCart,
         increment,

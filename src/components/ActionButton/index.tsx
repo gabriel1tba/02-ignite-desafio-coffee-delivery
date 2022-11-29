@@ -8,7 +8,8 @@ export interface ActionButtonProps extends ComponentPropsWithoutRef<'button'> {
   color?: 'yellow' | 'purple';
   variant?: 'solid' | 'common';
   borderRadius?: 'rounded' | 'common';
-  quantity?: number;
+  size?: 'small' | 'normal';
+  pinContent?: number;
 }
 
 const ActionButton = ({
@@ -16,13 +17,15 @@ const ActionButton = ({
   color = 'yellow',
   variant = 'solid',
   borderRadius = 'common',
-  quantity = 0,
+  size = 'normal',
+  pinContent = 0,
   ...props
 }: ActionButtonProps) => (
   <S.Wrapper
     color={color}
     variant={variant}
-    quantity={quantity}
+    size={size}
+    pinContent={pinContent}
     borderRadius={borderRadius}
     {...props}
   >
