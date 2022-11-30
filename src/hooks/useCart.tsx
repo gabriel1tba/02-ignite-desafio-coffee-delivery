@@ -42,7 +42,11 @@ const CartProvider = ({ children }: CartProviderProps) => {
     (id: number) => {
       const updatedProducts = products.map((product) =>
         product.id === id
-          ? { ...product, amount: product.amount + 1, addedToCart: true }
+          ? {
+              ...product,
+              amount: product.amount > 0 ? product.amount : product.amount + 1,
+              addedToCart: true,
+            }
           : product
       );
 
