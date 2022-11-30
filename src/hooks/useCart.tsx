@@ -36,7 +36,7 @@ interface CartProviderProps {
 }
 
 const CartProvider = ({ children }: CartProviderProps) => {
-  const [products, setProducts] = useCartLocalStorage();
+  const { products, setProducts } = useCartLocalStorage();
 
   const addToCart = useCallback(
     (id: number) => {

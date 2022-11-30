@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { MdLocationOn, MdShoppingCart } from 'react-icons/md';
+import { MdLocationOn, MdShoppingCart, MdWrongLocation } from 'react-icons/md';
 
 import { useCartContext } from '../../hooks/useCart';
 import useGeoLocation from '../../hooks/useGeoLocation';
@@ -14,7 +14,7 @@ import * as S from './styles';
 const Header = () => {
   const navigate = useNavigate();
   const { totalProductsInCart } = useCartContext();
-  const { city, regionCode, isLoading } = useGeoLocation();
+  const { city, regionCode, isLoading, isError } = useGeoLocation();
 
   return (
     <S.Wrapper>
@@ -23,8 +23,16 @@ const Header = () => {
       </Link>
 
       <div>
-        <Button variant="common" color="purple" icon={MdLocationOn}>
-          {isLoading ? 'Carregando...' : `${city}, ${regionCode}`}
+        <Button
+          variant="common"
+          color="purple"
+          icon={isError ? MdWrongLocation : MdLocationOn}
+        >
+          {isLoading
+            ? 'Carregando...'
+            : isError
+            ? 'Sem localização'
+            : `${city}, ${regionCode}`}
         </Button>
 
         <ActionButton

@@ -6,23 +6,25 @@ type Localization = {
 };
 
 const useGeoLocation = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [city, setCity] = useState('');
   const [regionCode, setRegionCode] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     (async () => {
       try {
-        setIsLoading(true);
         const response = await fetch('https://ipapi.co/json');
 
         const { city, region_code } = (await response.json()) as Localization;
 
         setCity(city);
         setRegionCode(region_code);
-        setIsLoading(false);
       } catch (error) {
+        setIsError(true);
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, []);
@@ -31,6 +33,7 @@ const useGeoLocation = () => {
     city,
     regionCode,
     isLoading,
+    isError,
   };
 };
 

@@ -46,40 +46,35 @@ const initializeProductsFc = () => {
 };
 
 const useCartLocalStorage = () => {
-  const [state, setState] = useState<Product[]>(initializeProductsFc);
+  const [products, setValue] = useState<Product[]>(initializeProductsFc);
 
-  const setValue = useCallback(
-    (value: Product[] | ((val: Product[]) => Product[])) => {
-      try {
-        const products = value instanceof Function ? value(state) : value;
+  const setProducts = useCallback((value: Product[]) => {
+    try {
+      setValue(value);
 
-        setState(products);
+      const valuesToStore: StoredProduct[] = [];
 
-        const valuesToStore: StoredProduct[] = [];
-
-        products.forEach((product) => {
-          if (product.addedToCart) {
-            valuesToStore.push({
-              id: product.id,
-              amount: product.amount,
-            });
-          }
-        });
-
-        if (typeof window !== 'undefined') {
-          window.localStorage.setItem(
-            '@CoffeeDelivery:products',
-            JSON.stringify(valuesToStore)
-          );
+      value.forEach((product) => {
+        if (product.addedToCart) {
+          valuesToStore.push({
+            id: product.id,
+            amount: product.amount,
+          });
         }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [state]
-  );
+      });
 
-  return [state, setValue] as const;
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(
+          '@CoffeeDelivery:products',
+          JSON.stringify(valuesToStore)
+        );
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  return { products, setProducts };
 };
 
 export default useCartLocalStorage;
