@@ -21,6 +21,7 @@ const Button = ({
   size = 'normal',
   fontSize = 'normal',
   fontWeight = 'regular',
+  type = 'button',
   ...props
 }: ButtonProps) => (
   <S.Wrapper
@@ -29,6 +30,7 @@ const Button = ({
     size={size}
     fontSize={fontSize}
     fontWeigth={fontWeight}
+    type={type}
     {...props}
   >
     {Icon && <Icon />}

@@ -1,8 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.main`
-  padding-bottom: 5rem;
-`;
+export const Wrapper = styled.main``;
 
 export const Banner = styled.div`
   display: flex;

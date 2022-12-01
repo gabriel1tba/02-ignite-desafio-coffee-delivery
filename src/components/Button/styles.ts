@@ -95,12 +95,16 @@ export const Wrapper = styled.button<WrapperProps>`
     border-radius: 6px;
     font-weight: ${fontWeigth === 'regular' ? 400 : 700};
     font-size: ${fontSize === 'normal' ? '0.875rem' : '0.75rem'};
-    line-height: 1.375rem;
 
     text-transform: uppercase;
     border: none;
 
     transition: background-color 0.5s;
+
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
 
     svg {
       font-size: ${size === 'normal' ? '1.375rem' : '1rem'};

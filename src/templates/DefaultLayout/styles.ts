@@ -5,10 +5,10 @@ export const Wrapper = styled.main`
   flex-direction: column;
   max-width: 72rem;
   width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
+  margin: auto;
+  padding: 0 1rem 1.375rem;
 
-  > main {
-    height: calc(100vh - 6.5rem);
+  > header {
+    margin-bottom: 5.75rem;
   }
 `;

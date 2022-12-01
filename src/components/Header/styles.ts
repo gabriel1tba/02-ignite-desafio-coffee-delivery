@@ -5,7 +5,6 @@ export const Wrapper = styled.header`
   justify-content: space-between;
   align-items: center;
   height: 5.5rem;
-  margin-bottom: 5.75rem;
 
   > div {
     display: flex;
