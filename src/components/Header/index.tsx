@@ -39,7 +39,7 @@ const Header = () => {
           variant="common"
           icon={MdShoppingCart}
           pinContent={totalProductsInCart}
-          onClick={() => totalProductsInCart > 0 && navigate('/cart')}
+          onClick={() => totalProductsInCart > 0 && navigate('/checkout')}
         />
       </div>
     </S.Wrapper>

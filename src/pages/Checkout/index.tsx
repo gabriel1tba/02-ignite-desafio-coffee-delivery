@@ -1,11 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
 
-import OrderForm from './OrderForm';
+import CheckoutForm from './CheckoutForm';
 import SelectedProducts from './SelectedProducts';
 
 import * as S from './styles';
+import { useCartContext } from '../../hooks/useCart';
 
 const formSchema = zod.object({
   zipCode: zod.string().min(9, 'CEP inválido'),
@@ -18,10 +20,10 @@ const formSchema = zod.object({
   paymentMethod: zod.string().min(1, 'Selecione um método de pagamento'),
 });
 
-export type OrderFormData = zod.infer<typeof formSchema>;
+export type CheckoutFormData = zod.infer<typeof formSchema>;
 
-const Cart = () => {
-  const methods = useForm<OrderFormData>({
+const Checkout = () => {
+  const methods = useForm<CheckoutFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       zipCode: '',
@@ -36,17 +38,20 @@ const Cart = () => {
   });
 
   const { handleSubmit, reset } = methods;
+  const navigate = useNavigate();
+  const { setAddress } = useCartContext();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    setAddress(data);
     reset();
+    navigate('/success-order');
   });
 
   return (
     <S.Wrapper>
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
-          <OrderForm />
+          <CheckoutForm />
 
           <SelectedProducts />
         </form>
@@ -55,4 +60,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Checkout;

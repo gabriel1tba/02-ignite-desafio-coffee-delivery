@@ -10,9 +10,9 @@ import Button from '../../../components/Button';
 
 import * as S from './styles';
 
-import { OrderFormData } from '..';
+import { CheckoutFormData } from '..';
 
-const OrderForm = () => {
+const CheckoutForm = () => {
   const theme = useTheme();
 
   const {
@@ -20,7 +20,7 @@ const OrderForm = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useFormContext<OrderFormData>();
+  } = useFormContext<CheckoutFormData>();
 
   const watchPaymentMethod = watch('paymentMethod');
 
@@ -152,4 +152,4 @@ const OrderForm = () => {
   );
 };
 
-export default OrderForm;
+export default CheckoutForm;

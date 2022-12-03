@@ -4,7 +4,10 @@ import {
   ReactNode,
   useMemo,
   useCallback,
+  useState,
 } from 'react';
+
+import { CheckoutFormData } from '../pages/Checkout';
 
 import useCartLocalStorage from './useCartLocalStorage';
 
@@ -27,6 +30,8 @@ interface CartContextProps {
   removeFromCart: (id: number) => void;
   increment: (id: number) => void;
   decrement: (id: number) => void;
+  address: CheckoutFormData;
+  setAddress: (address: CheckoutFormData) => void;
 }
 
 const CartContext = createContext({} as CartContextProps);
@@ -37,6 +42,7 @@ interface CartProviderProps {
 
 const CartProvider = ({ children }: CartProviderProps) => {
   const { products, setProducts } = useCartLocalStorage();
+  const [address, setAddress] = useState({} as CheckoutFormData);
 
   const addToCart = useCallback(
     (id: number) => {
@@ -119,6 +125,8 @@ const CartProvider = ({ children }: CartProviderProps) => {
         removeFromCart,
         increment,
         decrement,
+        address,
+        setAddress,
       }}
     >
       {children}
