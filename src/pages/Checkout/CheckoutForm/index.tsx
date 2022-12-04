@@ -19,7 +19,8 @@ import { CheckoutFormData } from '..';
 
 const CheckoutForm = () => {
   const theme = useTheme();
-  const { address, fetchAddress, hasFatched, setHasFatched } = useCep();
+  const { address, fetchAddress, hasFatched, setHasFatched, isLoading } =
+    useCep();
 
   const {
     register,
@@ -41,16 +42,14 @@ const CheckoutForm = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      if (watchCep.length === 9 && !hasFatched) {
-        try {
-          await fetchAddress(watchCep);
-          setHasFatched(true);
-        } catch (err) {
-          console.log(err);
-        }
+    if (watchCep.length === 9 && !hasFatched) {
+      try {
+        fetchAddress(watchCep);
+        setHasFatched(true);
+      } catch (err) {
+        console.log(err);
       }
-    })();
+    }
   }, [fetchAddress, hasFatched, setHasFatched, watchCep]);
 
   useEffect(() => {
@@ -105,8 +104,8 @@ const CheckoutForm = () => {
           <Input
             placeholder="Rua"
             error={errors.street?.message}
-            // value={address?.logradouro}
             disabled={!hasFatched}
+            isLoading={isLoading}
             {...register('street')}
           />
         </S.Col>
@@ -117,6 +116,7 @@ const CheckoutForm = () => {
               placeholder="Número"
               error={errors.number?.message}
               disabled={!hasFatched}
+              isLoading={isLoading}
               {...register('number')}
             />
           </S.Col>
@@ -126,6 +126,7 @@ const CheckoutForm = () => {
               placeholder="Complemento"
               error={errors.complement?.message}
               disabled={!hasFatched}
+              isLoading={isLoading}
               {...register('complement')}
             />
           </S.Col>
@@ -137,6 +138,7 @@ const CheckoutForm = () => {
               placeholder="Bairro"
               error={errors.neighborhood?.message}
               disabled={!hasFatched}
+              isLoading={isLoading}
               {...register('neighborhood')}
             />
           </S.Col>
@@ -146,6 +148,7 @@ const CheckoutForm = () => {
               placeholder="Cidade"
               error={errors.city?.message}
               disabled={!hasFatched}
+              isLoading={isLoading}
               {...register('city')}
             />
           </S.Col>
@@ -155,6 +158,7 @@ const CheckoutForm = () => {
               placeholder="UF"
               error={errors.uf?.message}
               disabled={!hasFatched}
+              isLoading={isLoading}
               {...register('uf')}
             />
           </S.Col>
