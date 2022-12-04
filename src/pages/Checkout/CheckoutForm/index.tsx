@@ -1,9 +1,14 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTheme } from 'styled-components';
 import { SlLocationPin } from 'react-icons/sl';
 import { HiOutlineCreditCard } from 'react-icons/hi';
 import { CiBank } from 'react-icons/ci';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
+
+import useCep from '../../../hooks/useCep';
+
+import formatCep from '../../../utils/formatCep';
 
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
@@ -14,6 +19,7 @@ import { CheckoutFormData } from '..';
 
 const CheckoutForm = () => {
   const theme = useTheme();
+  const { address, fetchAddress, hasFatched, setHasFatched } = useCep();
 
   const {
     register,
@@ -22,6 +28,7 @@ const CheckoutForm = () => {
     formState: { errors },
   } = useFormContext<CheckoutFormData>();
 
+  const watchCep = watch('zipCode');
   const watchPaymentMethod = watch('paymentMethod');
 
   const handleChangePaymentMethod = (method: string) => {
@@ -32,6 +39,47 @@ const CheckoutForm = () => {
 
     setValue('paymentMethod', method);
   };
+
+  useEffect(() => {
+    (async () => {
+      if (watchCep.length === 9 && !hasFatched) {
+        try {
+          await fetchAddress(watchCep);
+          setHasFatched(true);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })();
+  }, [fetchAddress, hasFatched, setHasFatched, watchCep]);
+
+  useEffect(() => {
+    if (watchCep.length === 9 && !address?.erro) {
+      setValue('street', address.logradouro);
+      setValue('neighborhood', address.bairro);
+      setValue('city', address.localidade);
+      setValue('uf', address.uf);
+    }
+
+    if (watchCep.length < 9) {
+      setValue('street', '');
+      setValue('neighborhood', '');
+      setValue('city', '');
+      setValue('uf', '');
+      setValue('number', '');
+      setValue('complement', '');
+      setHasFatched(false);
+    }
+  }, [
+    address.bairro,
+    address?.erro,
+    address.localidade,
+    address.logradouro,
+    address.uf,
+    setHasFatched,
+    setValue,
+    watchCep.length,
+  ]);
 
   return (
     <S.Wrapper>
@@ -48,7 +96,8 @@ const CheckoutForm = () => {
           <Input
             placeholder="CEP"
             error={errors.zipCode?.message}
-            {...register('zipCode')}
+            value={watchCep}
+            onChange={(e) => setValue('zipCode', formatCep(e.target.value))}
           />
         </S.Col>
 
@@ -56,6 +105,8 @@ const CheckoutForm = () => {
           <Input
             placeholder="Rua"
             error={errors.street?.message}
+            // value={address?.logradouro}
+            disabled={!hasFatched}
             {...register('street')}
           />
         </S.Col>
@@ -65,6 +116,7 @@ const CheckoutForm = () => {
             <Input
               placeholder="Número"
               error={errors.number?.message}
+              disabled={!hasFatched}
               {...register('number')}
             />
           </S.Col>
@@ -73,6 +125,7 @@ const CheckoutForm = () => {
             <Input
               placeholder="Complemento"
               error={errors.complement?.message}
+              disabled={!hasFatched}
               {...register('complement')}
             />
           </S.Col>
@@ -83,6 +136,7 @@ const CheckoutForm = () => {
             <Input
               placeholder="Bairro"
               error={errors.neighborhood?.message}
+              disabled={!hasFatched}
               {...register('neighborhood')}
             />
           </S.Col>
@@ -91,6 +145,7 @@ const CheckoutForm = () => {
             <Input
               placeholder="Cidade"
               error={errors.city?.message}
+              disabled={!hasFatched}
               {...register('city')}
             />
           </S.Col>
@@ -99,6 +154,7 @@ const CheckoutForm = () => {
             <Input
               placeholder="UF"
               error={errors.uf?.message}
+              disabled={!hasFatched}
               {...register('uf')}
             />
           </S.Col>
