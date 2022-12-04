@@ -17,6 +17,11 @@ import * as S from './styles';
 
 import { CheckoutFormData } from '..';
 
+type PaymentMethod = {
+  type: string;
+  typeName: string;
+};
+
 const CheckoutForm = () => {
   const theme = useTheme();
   const { address, fetchAddress, hasFatched, setHasFatched, isLoading } =
@@ -32,13 +37,13 @@ const CheckoutForm = () => {
   const watchCep = watch('zipCode');
   const watchPaymentMethod = watch('paymentMethod');
 
-  const handleChangePaymentMethod = (method: string) => {
-    if (watchPaymentMethod === method) {
-      setValue('paymentMethod', '');
+  const handleChangePaymentMethod = (paymentMethod: PaymentMethod) => {
+    if (watchPaymentMethod.type === paymentMethod.type) {
+      setValue('paymentMethod', {} as PaymentMethod);
       return;
     }
 
-    setValue('paymentMethod', method);
+    setValue('paymentMethod', paymentMethod);
   };
 
   useEffect(() => {
@@ -178,31 +183,46 @@ const CheckoutForm = () => {
 
         <S.ButtonSelect hasError={!!errors.paymentMethod}>
           <Button
-            className={watchPaymentMethod === 'creditCard' ? 'active' : ''}
+            className={watchPaymentMethod.type === 'creditCard' ? 'active' : ''}
             variant="common"
             color="purple"
             icon={HiOutlineCreditCard}
-            onClick={() => handleChangePaymentMethod('creditCard')}
+            onClick={() =>
+              handleChangePaymentMethod({
+                type: 'creditCard',
+                typeName: 'Cartão de Crédito',
+              })
+            }
           >
             CARTÃO DE CRÉDITO
           </Button>
 
           <Button
-            className={watchPaymentMethod === 'debitCard' ? 'active' : ''}
+            className={watchPaymentMethod.type === 'debitCard' ? 'active' : ''}
             variant="common"
             color="purple"
             icon={CiBank}
-            onClick={() => handleChangePaymentMethod('debitCard')}
+            onClick={() =>
+              handleChangePaymentMethod({
+                type: 'debitCard',
+                typeName: 'Cartão de Débito',
+              })
+            }
           >
             CARTÃO DE DÉBITO
           </Button>
 
           <Button
-            className={watchPaymentMethod === 'money' ? 'active' : ''}
+            className={watchPaymentMethod.type === 'money' ? 'active' : ''}
             variant="common"
             color="purple"
             icon={FaRegMoneyBillAlt}
-            onClick={() => handleChangePaymentMethod('money')}
+            onClick={() =>
+              handleChangePaymentMethod({
+                type: 'money',
+                typeName: 'Dinheiro',
+              })
+            }
           >
             DINHEIRO
           </Button>

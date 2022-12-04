@@ -28,6 +28,7 @@ interface CartContextProps {
   totalPrice: number;
   addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;
   increment: (id: number) => void;
   decrement: (id: number) => void;
   address: CheckoutFormData;
@@ -74,6 +75,18 @@ const CartProvider = ({ children }: CartProviderProps) => {
     },
     [products, setProducts]
   );
+
+  const clearCart = useCallback(() => {
+    setProducts(
+      products.map((product) => ({
+        ...product,
+        amount: 0,
+        addedToCart: false,
+      }))
+    );
+
+    window.localStorage.removeItem('@CoffeeDelivery:products');
+  }, [products, setProducts]);
 
   const increment = useCallback(
     (id: number) => {
@@ -123,6 +136,7 @@ const CartProvider = ({ children }: CartProviderProps) => {
         totalProductsInCart,
         addToCart,
         removeFromCart,
+        clearCart,
         increment,
         decrement,
         address,
@@ -138,7 +152,7 @@ const useCartContext = (): CartContextProps => {
   const context = useContext(CartContext);
 
   if (!context) {
-    throw new Error('useToastContext must be used within ToastProvider');
+    throw new Error('useCartContext must be used within CartProvider');
   }
 
   return context;

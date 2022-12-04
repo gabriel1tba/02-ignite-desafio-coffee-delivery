@@ -17,7 +17,10 @@ const formSchema = zod.object({
   neighborhood: zod.string().min(3, 'Bairro inválido'),
   city: zod.string().min(3, 'Cidade inválida'),
   uf: zod.string().min(2, 'UF inválida'),
-  paymentMethod: zod.string().min(1, 'Selecione um método de pagamento'),
+  paymentMethod: zod.object({
+    type: zod.string().min(3, 'Forma de pagamento inválida'),
+    typeName: zod.string().min(3, 'Forma de pagamento inválida'),
+  }),
 });
 
 export type CheckoutFormData = zod.infer<typeof formSchema>;
@@ -33,17 +36,21 @@ const Checkout = () => {
       neighborhood: '',
       city: '',
       uf: '',
-      paymentMethod: '',
+      paymentMethod: {
+        type: '',
+        typeName: '',
+      },
     },
   });
 
   const { handleSubmit, reset } = methods;
   const navigate = useNavigate();
-  const { setAddress } = useCartContext();
+  const { setAddress, clearCart } = useCartContext();
 
   const onSubmit = handleSubmit((data) => {
     setAddress(data);
     reset();
+    clearCart();
     navigate('/success-order');
   });
 
